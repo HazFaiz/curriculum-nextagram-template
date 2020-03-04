@@ -320,3 +320,47 @@ inside image model can create hybrid property
 in index.html can add donated amount
 
 <small> Donations: {{image.total_donations}} </small>
+
+    -----------------   OAUTH   ------------------
+
+all code provided, edit accordingly
+oauth allow to signin with google
+follow video to make project and get keys
+go to credentials, will be working on OAuth id > external > credenetials > create credentials > oauth client id > web applicaiton > name > authorised uri leave blank for now <<< ****LOOK BACK AT THIS LATER****
+
+pip install Authlib < give access to OAuth
+create helper file < google_oauth < only need tochange client id and client S3_SECRET
+
+in init.py
+need to initialize > oauth.init.app(app)
+
+in config, google id and secret go into dvelopment.config
+
+
+in sessions views.py
+two seprate routes, given in nextaca site
+sessions_blueprint.route /google_login", motehods = get
+def google_login():
+
+sessions_blueprint.route /google_authorize", motehods = get
+def google_authorize():
+
+new token variable
+
+if token:
+    email check if exists
+        new user where email
+        if not user < usual check if user exists
+            flash no user
+            return sessions.new
+
+login_user
+
+in new.html
+link url for sessions.google_login
+
+back in developer google page,
+/sessions/google_authorize
+
+
+

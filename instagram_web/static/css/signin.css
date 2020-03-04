@@ -1,0 +1,26 @@
+#parent_sign_in_container {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    height: 70%;
+    width: 50%;
+    background-color: rgba(0,0,0,0.8);
+}
+
+#sign_in_container {
+    /* height: 40% */
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-direction: column;
+}
+
+#sign_in_form {
+    display:flex;
+    justify-content: space-between;
+    grid-row-gap: 20px;
+    align-items: center;
+    align-content: center;
+    flex-direction: column;
+}
