@@ -26,6 +26,10 @@ Sign Up
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
+<button lass="btn btn-primary">
+    <a href="{{url_for('sessions.google_login')}}">Login Via Google</a>
+</button>
+
 {% for error in errors if errors|length > 0 %}
 <div style="margin:30px" class="alert alert-danger" role="alert">
     <li>{{error}}</li>

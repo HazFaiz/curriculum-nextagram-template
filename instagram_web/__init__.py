@@ -4,6 +4,9 @@ from flask import render_template
 from instagram_web.blueprints.users.views import users_blueprint
 from instagram_web.blueprints.sessions.views import sessions_blueprint
 from instagram_web.blueprints.donations.views import donations_blueprint
+import os
+import config
+from instagram_web.util.google_oauth import oauth
 
 from flask_assets import Environment, Bundle
 from .util.assets import bundles
@@ -12,6 +15,8 @@ from models.user import User
 
 assets = Environment(app)
 assets.register(bundles)
+
+oauth.init_app(app)
 
 app.register_blueprint(users_blueprint, url_prefix="/users")
 app.register_blueprint(sessions_blueprint, url_prefix="/sessions")
