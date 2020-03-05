@@ -363,4 +363,32 @@ back in developer google page,
 /sessions/google_authorize
 
 
+---------- FOLLOWERS -----------------
 
+new models follower_following
+has fan_id and idol_id. both referencign userids.
+when follow someone, create fan which is follower and idolid as the celeb they are follower_following
+
+class FollowerFollowing(basemodel);
+    fan = pw.Foreignkeyfield(User, backref=idols)
+    idol= samesame (User, backref='fans')
+
+    /// class Meta:
+    /// indexes = ((('fan))
+
+--=ew follows/views.py
+
+@follows_bp.route(<idol_id>)
+def create(idol_id):
+
+
+def delete(idol_id)
+follow = select from table where idol id and fan id are in same instance
+
+then
+
+follow.delete_instance
+
+
+users.py
+hybrid 
