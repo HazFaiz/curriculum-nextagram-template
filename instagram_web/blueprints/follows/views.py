@@ -48,7 +48,10 @@ def review(user_id):
 # PEEWEEE AND SQL HAVE DIFFERNT COMMNDS. & and and, lookup later
 
     requests = FollowerFollowing.select().where(
-        (FollowerFollowing.idol_id == current_user.id) & (FollowerFollowing.approved == False))
+        FollowerFollowing.idol_id == current_user.id)
+
+    # requests = FollowerFollowing.select().where(
+    #     (FollowerFollowing.idol_id == current_user.id) & (FollowerFollowing.approved == False))
 
     if current_user.id == user.id:
         return render_template("follows/requestreview.html", user=user, requests=requests)
@@ -67,7 +70,10 @@ def approve(fan_id):
         flash(f"No relationship found", "error")
         return redirect(url_for('follows.review', user_id=current_user.id))
 
-    approved_follow.approved = True
+    if approved_follow.approved == False:
+        approved_follow.approved = True
+    else:
+        approved_follow.approved = False
 
     if not approved_follow.save():
         flash(f"Could not approve follower", "error")

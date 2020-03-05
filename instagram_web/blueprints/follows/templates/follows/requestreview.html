@@ -15,11 +15,19 @@
 
 {% for request in requests %}
 
-<p>{{request.fan.name}} as a follower is currently {{request.approved}}</p>
+{% if request.approved == False %}
+<p>{{request.fan.name}} requested to be a Follower</p>
 <form action="{{url_for('follows.approve', fan_id=request.fan.id)}}" method="POST">
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
     <button type="submit" class="btn btn-primary">Approve</button>
 </form>
+{% else %}
+<p>{{request.fan.name}} is currently a Follower</p>
+<form action="{{url_for('follows.approve', fan_id=request.fan.id)}}" method="POST">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+    <button type="submit" class="btn btn-danger">Unapprove</button>
+</form>
+{% endif %}
 {%endfor%}
 
 

@@ -31,6 +31,9 @@
         <!-- ----------------DISPLAY NAME OF LOGGED IN USER ------>
         <!-- How to pass a variable as a link -->
         {% if current_user.is_authenticated %}
+        <a class="nav-link" href="{{ url_for('follows.review', user_id=current_user.id) }}">
+            Review Requests
+        </a>
         <a class="nav-link" href="{{ url_for('users.edit', id=current_user.id) }}">
             Edit Details
         </a>
