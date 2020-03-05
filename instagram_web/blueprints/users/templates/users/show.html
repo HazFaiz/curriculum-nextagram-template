@@ -27,10 +27,10 @@
     <div class="col-4">
         <form action="{{url_for('follows.create', idol_id=user.id)}}" method="POST">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-            <button type="submit" , class="btn btn-primary">Follow</button>
+            <button type="submit" class="btn btn-primary">Follow</button>
         </form>
         {% else %}
-        <button type="disabled" , class="btn btn-primary">Requested</button>
+        <button type="disabled" class="btn btn-primary">Requested</button>
 
         {% endif %}
         <h4>Followers: {{user.fans | length}}</h4>
@@ -88,6 +88,6 @@
 <div style="margin:30px" class="alert alert-danger" role="alert">
     <li>{{error}}</li>
 </div> -->
-{% endfor %}
+<!-- {% endfor %} -->
 
 {% endblock %}

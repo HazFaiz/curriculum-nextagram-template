@@ -39,6 +39,44 @@ def delete(idol_id):
 
     flash(f"You have unfollowed {follow.idol.name}")
     return redirect(url_for('users_show', username=follow.idol.name))
+
+# http://127.0.0.1:5000/follows/34/review
+@follows_blueprint.route('/<user_id>/review')
+def review(user_id):
+    user = User.get_or_none(User.id == user_id)
+
+# PEEWEEE AND SQL HAVE DIFFERNT COMMNDS. & and and, lookup later
+
+    requests = FollowerFollowing.select().where(
+        (FollowerFollowing.idol_id == current_user.id) & (FollowerFollowing.approved == False))
+
+    if current_user.id == user.id:
+        return render_template("follows/requestreview.html", user=user, requests=requests)
+    else:
+        return abort(401)
+
+
+@follows_blueprint.route('<fan_id>/review/approve', methods=["POST"])
+def approve(fan_id):
+
+    # ------GET THE INSTANCE AND SET APPROVED TO TRUE ---------------
+    approved_follow = FollowerFollowing.get_or_none(
+        (FollowerFollowing.idol_id == current_user.id) & (FollowerFollowing.fan_id == fan_id))
+
+    if not approved_follow:
+        flash(f"No relationship found", "error")
+        return redirect(url_for('follows.review', user_id=current_user.id))
+
+    approved_follow.approved = True
+
+    if not approved_follow.save():
+        flash(f"Could not approve follower", "error")
+        return redirect(url_for('follows.review', user_id=current_user.id))
+
+    else:
+        flash(f"Sucessfully approved follower", "sucess")
+        return redirect(url_for('follows.review', user_id=current_user.id))
+
 # -------------- ISSUES TO KEEP IN MIND ----------
 # 1) previous code on users/views.py may have been set to deny a user to see another users profile, as in give a error page. change it to where can see profile, but have to follow to see images
 
