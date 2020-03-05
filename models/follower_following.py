@@ -5,6 +5,6 @@ from playhouse.hybrid import hybrid_property, hybrid_method
 
 
 class FollowerFollowing(BaseModel):
-    fan = pw.ForeignKeyField(User, backref="idols")
-    idol = pw.ForeignKeyField(User, backref="fans")
+    fan = pw.ForeignKeyField(User, backref="idols")  # ppl im trying foolow
+    idol = pw.ForeignKeyField(User, backref="fans")  # ppl trying to folow me
     approved = pw.BooleanField(default=False)  # <<??? MIGHT CAUSE ISSUES

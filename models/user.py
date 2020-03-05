@@ -10,6 +10,7 @@ class User(BaseModel):
     email = pw.CharField(unique=True)
     password = pw.CharField(null=False)
     profile_image = pw.CharField(null=True)
+    private_profile = pw.BooleanField(default=True)
 # add in signup aand password.
 
 # -----------------FIGURE OUT VALIDATION AFTER ---
@@ -69,7 +70,19 @@ class User(BaseModel):
 
         return True
 
+# ----- DETERMINES IF FOLLOWING AN IDOL OR NOT --------------
+
     @hybrid_method
     def is_following(self, user):
         from models.follower_following import FollowerFollowing
         return True if FollowerFollowing.get_or_none((FollowerFollowing.idol_id == user.id) & (FollowerFollowing.fan_id == self.id)) else False
+
+
+# ------ DETERMINES IF A PROFILE IS PRIVATE OR NOT BASED ON APROVED STATUS OF FOLLOWER-IDOL RELATIONSHIP----------
+
+    # @hybrid_property
+    # def is_private(self):
+    #     if self.private_profile == True:
+    #         return True
+    #     else:
+    #         False

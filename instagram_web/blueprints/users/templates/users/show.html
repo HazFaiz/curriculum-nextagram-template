@@ -18,6 +18,10 @@
 {% endfor %} -->
 
 <!-- FOLLOWING/FOLLOWS -->
+<!-- {% if user.is_private == True %}
+<h1>This profile is private</h1>
+{% else %} -->
+
 <div class="container d-flex p-3 flex-nowrap">
     <div class="col-8">
         <h1>{{user.name}}'s Page</h1>
@@ -89,5 +93,6 @@
     <li>{{error}}</li>
 </div> -->
 <!-- {% endfor %} -->
+<!-- {% endif %} -->
 
 {% endblock %}
