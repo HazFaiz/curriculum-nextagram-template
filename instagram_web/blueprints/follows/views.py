@@ -25,7 +25,7 @@ def create(idol_id):
 
     if not new_follow.save():
         flash(f"Unable to save this follow", "error")
-        return redirect(url_for('users.show', usefdrname=idol.name))
+        return redirect(url_for('users.show', username=idol.name))
 
     flash('Follow request sent, please wait for approval')
     return redirect(url_for('users.show', username=idol.name))
