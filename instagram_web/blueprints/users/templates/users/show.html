@@ -11,7 +11,7 @@
 <h1>{{user.name}}'s Page</h1>
 
 
-{% if current_user.is_approved(user, current_user) and current_user.is_following(user) %}
+{% if current_user.is_approved(user) %}
 <h1>You are approved</h1>
 <div class="container">
     <div class="card-columns">

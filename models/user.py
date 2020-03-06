@@ -77,14 +77,25 @@ class User(BaseModel):
 # ------ SANDRA HELPED WITH BELOW LOGIC. GIVE HER FOOD -----
 
     @hybrid_method
-    def is_approved(self, user, current_user):
+    def is_approved(self, user):
         from models.follower_following import FollowerFollowing
-        user = FollowerFollowing.get_or_none(
-            FollowerFollowing.idol_id == user.id)
-        current_user = FollowerFollowing.get_or_none(
-            FollowerFollowing.fan_id == self.id)
-        if user and current_user.approved == True:
-            return True
-        return False
+        # user = FollowerFollowing.get_or_none(
+        #     FollowerFollowing.idol_id == user.id)
+        # fan = FollowerFollowing.get_or_none(
+        #     FollowerFollowing.fan_id == self.id)
+        x = FollowerFollowing.get_or_none(
+            (FollowerFollowing.fan_id == self.id) & (FollowerFollowing.idol_id == user.id))
+        #     return True
+        # return False
 
-        # return True if FollowerFollowing.get_or_none((FollowerFollowing.idol_id == user.id) & (FollowerFollowing.fan_id == self.id) & (yourself.approved == True) else False
+        return True if (x.approved == True) else False
+
+# ---FINALLY FUCKING WORKs
+
+# >> > b = FollowerFollowing.get_or_none((FollowerFollowing.fan_id == 34) & (FollowerFollowing.idol_id == 36))
+# >> > b
+# <FollowerFollowing: 38 >
+# >> > b.id
+# 38
+# >> > b.approved
+# True  ----
