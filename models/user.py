@@ -11,7 +11,7 @@ class User(BaseModel):
     password = pw.CharField(null=False)
     profile_image = pw.CharField(null=True)
     private_profile = pw.BooleanField(default=True)
-# add in signup aand password.
+
 
 # -----------------FIGURE OUT VALIDATION AFTER ---
 
@@ -79,10 +79,3 @@ class User(BaseModel):
 
 
 # ------ DETERMINES IF A PROFILE IS PRIVATE OR NOT BASED ON APROVED STATUS OF FOLLOWER-IDOL RELATIONSHIP----------
-
-    # @hybrid_property
-    # def is_private(self):
-    #     if self.private_profile == True:
-    #         return True
-    #     else:
-    #         False
