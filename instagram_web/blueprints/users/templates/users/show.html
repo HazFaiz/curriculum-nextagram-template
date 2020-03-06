@@ -8,62 +8,47 @@
 {% endblock %}
 
 {% block content %}
+<h1>{{user.name}}'s Page</h1>
 
-{% if current_user.is_approved(user, current_user) %}
+
+{% if current_user.is_approved(user, current_user) and current_user.is_following(user) %}
 <h1>You are approved</h1>
-<h1>{{user.name}}'s Page</h1>
-{%else%}
-<h1>You are not approved</h1>
-<h1>{{user.name}}'s Page</h1>
-{%endif%}
-
-{% if user.is_private %}
-
-<h1>Page is Private</h1>
-
-{% else %}
-
-<div id="shown_profile">
-    <div class="container d-flex p-3 flex-nowrap">
-        <div class="col-8">
-            <h1>{{user.name}}'s Page</h1>
-        </div>
-        {% if not current_user.is_following(user) %}
-        <div class="col-4">
-            <form action="{{url_for('follows.create', idol_id=user.id)}}" method="POST">
-                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-                <button type="submit" class="btn btn-primary">Follow</button>
-            </form>
-            {% else %}
-            <button type="disabled" class="btn btn-primary">Requested</button>
-
-            {% endif %}
-            <h4>Followers: {{user.fans | length}}</h4>
-            <h4>Following: {{user.idols | length}}</h4>
-
-        </div>
-    </div>
-    <!--------- MASONRY FOR USER IMAGE CARDS GO HERE -------->
-    <div class="container">
-        <div class="card-columns">
-            {% for images in user.userimages %}
-            <!-- VERY IMPORTANT WAY TO DISPLAY USER IMAGES -->
-            <!-- userimages model connected to user model using user.userimages -->
-            <div class="card shadow p-3 mb-5 bg-white rounded">
-                <div>
-                    <img class="editpic card-img" src="{{images.user_image_url}}" alt="profile placeholder">
-                </div>
+<div class="container">
+    <div class="card-columns">
+        {% for images in user.userimages %}
+        <div class="card shadow p-3 mb-5 bg-white rounded">
+            <div>
+                <img class="editpic card-img" src="{{images.user_image_url}}" alt="profile placeholder">
             </div>
-            {% else %}
-            <div class="card">
-                <img class="editpic" src="{{url_for('static', filename='images/placeholder.png')}}"
-                    alt=" profile placeholder">
-            </div>
-            {% endfor %}
         </div>
+        {% else %}
+        <div class="card">
+            <img class="editpic" src="{{url_for('static', filename='images/placeholder.png')}}"
+                alt=" profile placeholder">
+        </div>
+        {% endfor %}
     </div>
 </div>
 
-{% endif %}
+{%else%}
+<h1>You are not approved</h1>
+<h1>{{user.name}}'s Page is Private</h1>
+{% if not current_user.is_following(user) %}
+<div class="col-4">
+    <form action="{{url_for('follows.create', idol_id=user.id)}}" method="POST">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+        <button type="submit" class="btn btn-primary">Follow</button>
+    </form>
+    {% else %}
+    <button type="disabled" class="btn btn-primary">Requested</button>
+
+    {% endif %}
+    <h4>Followers: {{user.fans | length}}</h4>
+    <h4>Following: {{user.idols | length}}</h4>
+
+</div>
+
+{%endif%}
+
 
 {% endblock %}
