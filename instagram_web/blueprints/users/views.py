@@ -68,23 +68,6 @@ def index():
     return render_template('users/index.html', images=images)
 
 
-@users_blueprint.route('/<id>/edit', methods=['GET'])
-@login_required
-def edit(id):
-    if not str(current_user.id) == id:
-        flash(f"You are not authorized to update this page")
-        return redirect(url_for('users.edit', id=current_user.id))
-
-    user = User.get_or_none(User.id == id)
-
-    if current_user:
-        if not user:
-            flash(f"You're in the wrong neighborhood boy")
-            return redirect(url_for("home"))
-        else:
-            return render_template("users/edit.html", user=user)
-
-
 @users_blueprint.route('/<id>', methods=['POST'])
 @login_required
 def update(id):
@@ -138,6 +121,21 @@ def upload():
     return redirect(url_for('users.edit', id=user.id))
 
 
+@users_blueprint.route('/<id>/edit', methods=['GET'])
+@login_required
+def edit(id):
+    if not str(current_user.id) == id:
+        flash(f"You are not authorized to update this page")
+        return redirect(url_for('users.edit', id=current_user.id))
+
+    user = User.get_or_none(User.id == id)
+
+    if current_user:
+        if not user:
+            flash(f"You're in the wrong neighborhood boy")
+            return redirect(url_for("home"))
+        else:
+            return render_template("users/edit.html", user=user)
 # ----------------- USER IMAGES UPLOAD HERE --------------
 
 

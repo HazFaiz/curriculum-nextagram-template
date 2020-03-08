@@ -1,0 +1,34 @@
+{% extends "_layout.html" %}
+
+{% block title %}
+{{user.name}} Requests
+{% endblock %}
+
+{% block header %}
+{% endblock %}
+
+{% block content %}
+
+
+
+<h1>REVIEW REQUEST HERE</h1>
+
+{% for request in requests %}
+
+{% if request.approved == False %}
+<p>{{request.fan.name}} requested to be a Follower</p>
+<form action="{{url_for('follows.approve', fan_id=request.fan.id)}}" method="POST">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+    <button type="submit" class="btn btn-primary">Approve</button>
+</form>
+{% else %}
+<p>{{request.fan.name}} is currently a Follower</p>
+<form action="{{url_for('follows.approve', fan_id=request.fan.id)}}" method="POST">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+    <button type="submit" class="btn btn-danger">Unapprove</button>
+</form>
+{% endif %}
+{%endfor%}
+
+
+{% endblock %}

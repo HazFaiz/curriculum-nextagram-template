@@ -76,6 +76,6 @@ def create(image_id):
         flash(f"Donated succesfully but error creating a record in database", 'warning')
         return redirect(url_for('users.index'))
 
-    flash(f"Donated: ${amount}", 'sucess')
+    flash(f"Donated: ${amount}", 'success')
     send_simple_message(amount=amount, name=donator.name)
     return redirect(url_for('users.index'))

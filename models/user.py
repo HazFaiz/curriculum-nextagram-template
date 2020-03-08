@@ -1,7 +1,7 @@
 from models.base_model import BaseModel
 import peewee as pw
 from werkzeug.security import generate_password_hash
-from playhouse.hybrid import hybrid_property
+from playhouse.hybrid import hybrid_property, hybrid_method
 import re
 
 
@@ -10,9 +10,7 @@ class User(BaseModel):
     email = pw.CharField(unique=True)
     password = pw.CharField(null=False)
     profile_image = pw.CharField(null=True)
-# add in signup aand password.
-
-# -----------------FIGURE OUT VALIDATION AFTER ---
+    private = pw.BooleanField(default=True)
 
     @hybrid_property
     def profile_image_url(self):
@@ -58,13 +56,46 @@ class User(BaseModel):
             else:
                 self.password = generate_password_hash(self.password)
 
-    # BELOW IS OUTDATED DUE TO ABOVE EMAIL VALIDATION #
-        # implement the validation from yesterday
-        # duplicate_email = User.get_or_none(User.email == self.email)
-        # # pass_check = User.get_or_none(User.password == self.password)
-        # if duplicate_email:
-        #     self.errors.append('Email already taken')
-        # else:
-        #     print('Validation is now being implemented')
-
         return True
+
+# ----- DETERMINES IF FOLLOWING AN IDOL OR NOT --------------
+
+    @hybrid_method
+    def is_following(self, user):
+        from models.follower_following import FollowerFollowing
+        return True if FollowerFollowing.get_or_none((FollowerFollowing.idol_id == user.id) & (FollowerFollowing.fan_id == self.id)) else False
+
+# ------ PRIVATE PROFILE PROPERTY ---------------
+
+    @hybrid_property
+    def is_private(self):
+        if self.private:
+            return True
+        else:
+            return False
+
+# ------ SANDRA HELPED WITH BELOW LOGIC. GIVE HER FOOD -----
+
+    @hybrid_method
+    def is_approved(self, user):
+        from models.follower_following import FollowerFollowing
+        # user = FollowerFollowing.get_or_none(
+        #     FollowerFollowing.idol_id == user.id)
+        # fan = FollowerFollowing.get_or_none(
+        #     FollowerFollowing.fan_id == self.id)
+        x = FollowerFollowing.get_or_none(
+            (FollowerFollowing.fan_id == self.id) & (FollowerFollowing.idol_id == user.id))
+        #     return True
+        # return False
+
+        return True if (x.approved == True) else False
+
+# ---FINALLY FUCKING WORKs
+
+# >> > b = FollowerFollowing.get_or_none((FollowerFollowing.fan_id == 34) & (FollowerFollowing.idol_id == 36))
+# >> > b
+# <FollowerFollowing: 38 >
+# >> > b.id
+# 38
+# >> > b.approved
+# True  ----
