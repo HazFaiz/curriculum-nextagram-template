@@ -17,6 +17,7 @@ pbr==5.4.4
 psycopg2-binary==2.8.4
 python-dotenv==0.10.3
 python-editor==1.0.4
+peewee-db-evolve==3.7.3
 readchar==2.0.1
 requests==2.23.0
 six==1.14.0
