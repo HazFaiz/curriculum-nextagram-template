@@ -1,10 +1,10 @@
 import os
+from dotenv import load_dotenv
 
 os.environ['MIGRATION'] = '1'
 
 if not os.getenv('FLASK_ENV') == 'production':
     print("Loading environment variables from .env")
-    from dotenv import load_dotenv
     load_dotenv()
 
 
