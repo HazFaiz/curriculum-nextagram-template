@@ -1,3 +1,7 @@
+#Notes
+Checkout the live demo here: https://nrxtagram-hf.herokuapp.com/
+
+
 # Flask Nextagram Template
 
 version 0.0.1 (alpha)
